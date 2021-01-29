@@ -3,21 +3,26 @@
     <form @submit.prevent="cadastrar">
       <h2>Moto</h2>
       <div class="form-group">
-        <label for="">Placa</label>
-        <input type="text" id="placa"
-            class="form-control" required autofocus
-            v-model="placa">
+        <label for="placa">Placa</label>
+        <input
+          type="text"
+          id="placa"
+          class="form-control"
+          required
+          autofocus
+          v-model="placa"
+        />
       </div>
       <div class="form-group">
-        <label for="texto">Modelo</label>
-        <textarea id="modelo"
-            class="form-control" required
-            v-model="modelo">
+        <label for="modelo">Modelo</label>
+        <textarea id="modelo" class="form-control" required v-model="modelo">
         </textarea>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Salvar
+      </button>
     </form>
-    <br>
+    <br />
     <table class="table table-striped">
       <thead>
         <tr>
@@ -38,51 +43,48 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapState } from 'vuex'
+import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
-  name: 'motos',
+  name: "motos",
   data() {
     return {
-      placa: '',
-      modelo: '',
-      motos: []
-    }
+      placa: "",
+      modelo: "",
+      motos: [],
+    };
   },
   computed: {
-    ...mapState([
-      'usuario'
-    ])
+    ...mapState(["usuario"]),
   },
   methods: {
     cadastrar() {
-      axios.post('moto',
-          {
-            placa: this.placa,
-            modelo: this.modelo,
-            
-          })
-        .then(res => {
+      axios
+        .post("moto", {
+          placa: this.placa,
+          modelo: this.modelo,
+        })
+        .then((res) => {
           console.log(res);
-          this.placa = '';
-          this.modelo = '';
+          this.placa = "";
+          this.modelo = "";
           this.atualizar();
         })
-        .catch(error => console.log(error))
+        .catch((error) => console.log(error))
     },
-    atualizar () {
-      axios.get('moto', 
-          { headers: { Accept: 'application/json' } })
-        .then(res => {
-          console.log(res)
-          this.anotacoes = res.data
+    atualizar() {
+      axios
+        .get("moto", { headers: { Accept: "application/json" } })
+        .then((res) => {
+          console.log(res);
+          this.motos = res.data;
         })
-        .catch(error => console.log(error))
-    }
+        .catch((error) => console.log(error));
+    },
   },
-  created () {
-    this.atualizar()
-  }
-}
+  created() {
+    this.atualizar();
+  },
+};
 </script>

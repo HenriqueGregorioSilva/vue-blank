@@ -40,7 +40,7 @@ export default {
           console.log(res)
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
-          this.$router.push('/')
+          this.$router.push('/motos')
         })
         .catch(error => console.log(error))
     }
