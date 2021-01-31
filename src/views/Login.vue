@@ -8,8 +8,9 @@
     <div class="form-group">
       <label for="inputPassword">Senha</label>
       <input type="password" id="inputPassword" class="form-control" required v-model="senha">
+
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Ok</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
   </form>
 </template>
 
@@ -40,9 +41,15 @@ export default {
           console.log(res)
           this.setUsuario(res.data)
           this.setToken(res.headers.token)
-          this.$router.push('/')
+          this.$router.push('/motos')
         })
-        .catch(error => console.log(error))
+        .catch(error =>{
+            if (error.response.status === 403){
+                var msg = "Usuário ou senha inválida !"
+                alert(msg)
+            }
+            
+        });
     }
   }
 }
