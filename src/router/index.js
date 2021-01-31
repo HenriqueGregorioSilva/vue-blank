@@ -16,6 +16,11 @@ Vue.use(VueRouter);
       name: 'motos',
       component: () => import('../views/Motos.vue')
     },
+    {
+      path: '/usuario',
+      name: 'usuario',
+      component: () => import('../views/Usuario.vue')
+    },
   {
     path: '/login',
     name: 'Login',

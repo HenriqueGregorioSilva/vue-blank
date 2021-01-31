@@ -1,18 +1,21 @@
 <template>
   <div>
     <form @submit.prevent="cadastrar">
-      <h2>Moto</h2>
+      <h2>Usuario</h2>
       <div class="form-group">
-        <label for="placa">Placa</label>
+        <label for="nome">Nome</label>
         <input
           type="text"
-          id="placa"
-          class="form-control" required autofocus
-          v-model="placa">
+          id="nome"
+          class="form-control"
+          required
+          autofocus
+          v-model="nome"
+        />
       </div>
       <div class="form-group">
-        <label for="modelo">Modelo</label>
-        <textarea id="modelo" class="form-control" required v-model="modelo">
+        <label for="senha">Senha</label>
+        <textarea id="senha" class="form-control" required v-model="senha">
         </textarea>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -24,15 +27,15 @@
       <thead>
         <tr>
           <th>Id</th>
-          <th>Placa</th>
-          <th>Modelo</th>
+          <th>Nome</th>
+          <th>Senha</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="moto in motos" :key="moto.id">
-          <td>{{ moto.id }}</td>
-          <td>{{ moto.placa }}</td>
-          <td>{{ moto.modelo }}</td>
+        <tr v-for="usuario in usuarios" :key="usuario.id">
+          <td>{{ usuario.id }}</td>
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.senha }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,12 +47,12 @@ import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
-  name: "motos",
+  name: "usuarios",
   data() {
     return {
-      placa: "",
-      modelo: "",
-      motos: [],
+      nome: "",
+      senha: "",
+      usuarios: [],
     };
   },
   computed: {
@@ -58,28 +61,26 @@ export default {
   methods: {
     cadastrar() {
       axios
-        .post("moto", {
-          placa: this.placa,
-          modelo: this.modelo,
+        .post("usuario", {
+          nome: this.nome,
+          senha: this.senha,
         })
         .then((res) => {
           console.log(res);
-          this.placa = "";
-          this.modelo = "";
+          this.nome = "";
+          this.senha = "";
           this.atualizar();
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error));
     },
     atualizar() {
       axios
-        .get("moto", { headers: { Accept: "application/json" } })
+        .get("usuario", { headers: { Accept: "application/json" } })
         .then((res) => {
           console.log(res);
-          this.motos = res.data;
+          this.usuarios = res.data;
         })
-        .catch((error) => {
-            alert(error.response.status)
-        });
+        .catch((error) => console.log(error));
     },
   },
   created() {
