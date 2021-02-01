@@ -1,7 +1,15 @@
 <template>
   <div>
     <form @submit.prevent="cadastrar">
-      <h2>Moto</h2>
+      <h2>Altualizar Moto</h2>
+      <div class="form-group">
+        <label for="id">Id</label>
+        <input
+          type="text"
+          id="id"
+          class="form-control" required autofocus
+          v-model="id">
+      </div>
       <div class="form-group">
         <label for="placa">Placa</label>
         <input
@@ -12,30 +20,16 @@
       </div>
       <div class="form-group">
         <label for="modelo">Modelo</label>
-        <textarea id="modelo" class="form-control" required v-model="modelo">
-        </textarea>
+        <input
+          type="text"
+          id="modelo"
+          class="form-control" required autofocus
+          v-model="modelo">
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Salvar
+        Alterar
       </button>
     </form>
-    <br />
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Placa</th>
-          <th>Modelo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="moto in motos" :key="moto.id">
-          <td>{{ moto.id }}</td>
-          <td>{{ moto.placa }}</td>
-          <td>{{ moto.modelo }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
@@ -48,9 +42,9 @@ export default {
   name: "motos",
   data() {
     return {
+      id: "",
       placa: "",
       modelo: "",
-      motos: [],
     };
   },
   computed: {
@@ -67,32 +61,20 @@ export default {
   methods: {
     cadastrar() {
       axios
-        .post("moto", {
+        .put("moto",  {
+          id: this.id,
           placa: this.placa,
           modelo: this.modelo,
-        })
+        },{ headers: { Accept: "application/json", Authorization: 'Bearer ' + this.tk} })
         .then((res) => {
           console.log(res);
+          this.id = "";
           this.placa = "";
           this.modelo = "";
-          this.atualizar();
         })
         .catch((error) => console.log(error))
     },
-    atualizar() {
-      axios
-        .get("moto", { headers: { Accept: "application/json", Authorization: 'Bearer ' + this.tk} })
-        .then((res) => {
-          console.log(res);
-          this.motos = res.data;
-        })
-        .catch((error) => {
-            alert(error.response.status)
-        });
-    },
   },
-  created() {
-    this.atualizar();
-  },
+  
 };
 </script>

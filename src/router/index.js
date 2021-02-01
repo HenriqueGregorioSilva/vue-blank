@@ -21,6 +21,16 @@ Vue.use(VueRouter);
       name: 'usuario',
       component: () => import('../views/Usuario.vue')
     },
+    {
+      path: '/atualizar',
+      name: 'atualizar',
+      component: () => import('../views/AtualizarMoto.vue')
+    },
+    {
+      path: '/deletar',
+      name: 'deletar',
+      component: () => import('../views/DeletarMoto.vue')
+    },
   {
     path: '/login',
     name: 'Login',

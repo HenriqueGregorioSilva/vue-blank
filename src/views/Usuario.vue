@@ -57,6 +57,14 @@ export default {
   },
   computed: {
     ...mapState(["usuario"]),
+     tk: {
+        get() {
+            return this.$store.state.token
+        },
+        set(value){
+            this.setToken(value);
+        }
+    }
   },
   methods: {
     cadastrar() {
@@ -75,7 +83,7 @@ export default {
     },
     atualizar() {
       axios
-        .get("usuario", { headers: { Accept: "application/json" } })
+        .get("usuario", { headers: { Accept: "application/json", Authorization: 'Bearer ' + this.tk} })
         .then((res) => {
           console.log(res);
           this.usuarios = res.data;

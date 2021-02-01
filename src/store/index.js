@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         usuario: null,
-        token: null
+        token: null,
+        papel: null
     },
     mutations: {
         setUsuario(state, usuario) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
         },
         setToken(state, token) {
             state.token = token;
+        },
+        setPapel(state, papel) {
+            state.papel = papel;
         },
         logout(state) {
             state.token = null;
